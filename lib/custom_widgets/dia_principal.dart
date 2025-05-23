@@ -5,7 +5,7 @@ import '../utils/utils.dart';
 
 class DiaPrincipal extends StatelessWidget {
   final ModeloPronostico dia;
-  DiaPrincipal({super.key, required this.dia});
+  const DiaPrincipal({super.key, required this.dia});
 
   Widget Separador() {
     return Container(

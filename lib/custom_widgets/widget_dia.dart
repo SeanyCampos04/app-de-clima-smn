@@ -3,13 +3,12 @@ import 'package:intl/intl.dart';
 import 'package:smn/custom_widgets/texto_gris_negrita.dart';
 import 'package:smn/models/modelo_pronostico.dart';
 import 'package:smn/utils/utils.dart';
-import 'package:weather_icons/weather_icons.dart';
 
 class WidgetDia extends StatelessWidget {
   final ModeloPronostico pronostico;
   final int index;
 
-  WidgetDia({
+  const WidgetDia({
     super.key,
     required this.pronostico,
     required this.index,
@@ -112,14 +111,14 @@ class WidgetDia extends StatelessWidget {
                     width: tamano,
                     child: TextoGrisNegrita(
                       texto: "Vel viento: ",
-                      medida: "${pronostico.velvien}",
+                      medida: pronostico.velvien,
                     ),
                   ),
                   SizedBox(
                     width: tamano,
                     child: TextoGrisNegrita(
                       texto: "Dir del viento: ",
-                      medida: "${pronostico.dirvienc}",
+                      medida: pronostico.dirvienc,
                     ),
                   ),
                   SizedBox(

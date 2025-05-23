@@ -2,6 +2,11 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smn/models/modelo_municipio.dart';
 
+Future<List<String>> cargarFavoritos() async {
+  final prefs = await SharedPreferences.getInstance();
+  return prefs.getStringList('favoritos') ?? [];
+}
+
 class Favoritos {
   static const _key = "municipios_favoritos";
 

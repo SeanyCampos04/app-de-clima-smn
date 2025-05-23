@@ -50,7 +50,7 @@ class AcordeonDias extends StatelessWidget {
                           style: TextStyle(fontSize: 16.0),
                         ),
                         Text(
-                          "$fecha",
+                          fecha,
                           style:
                               TextStyle(color: Colors.black26, fontSize: 12.0),
                         ),

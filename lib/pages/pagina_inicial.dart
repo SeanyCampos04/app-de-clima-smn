@@ -1,3 +1,4 @@
+import 'pagina_favoritos.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -26,7 +27,7 @@ class PaginaInicial extends StatefulWidget {
 
 class _PaginaInicialState extends State<PaginaInicial> {
   bool _isGPSEnabled = false;
-  String _hoy = DateFormat("dd MMMM", "es_ES").format(DateTime.now());
+  final String _hoy = DateFormat("dd MMMM", "es_ES").format(DateTime.now());
   String _ciudad = "Cargando ciudad...";
   int _diaSeleccionado = 0;
   String _fechaSeleccionada = "";
@@ -152,27 +153,49 @@ class _PaginaInicialState extends State<PaginaInicial> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
-                padding: EdgeInsets.only(
-              top: MediaQuery.of(context).padding.top,
-            )),
-            Column(
-              children: [
-                ListTile(
-                  leading: const Icon(Icons.home_outlined),
-                  title: const Text('Inicio'),
-                  onTap: () {},
-                ),
-                SwitchListTile(
-                  title: Text('Modo Oscuro'),
-                  value: tema.esOscuro,
-                  onChanged: (value) => tema.cambiaTema(value),
-                )
-              ],
-            )
-          ],
+            Container (
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).padding.top,
+                bottom: 16,
+                left: 16,
+              ),
+              color: const Color.fromARGB(255, 9, 226, 226),
+              
+              child: Text( 
+                'Menú',
+                style: TextStyle(fontSize: 24, color: const Color.fromARGB(255, 0, 0, 0)),
+            
+            ),
+            ),
+            ListTile(
+          leading: const Icon(Icons.home_outlined),
+          title: const Text('Inicio'),
+          onTap: () {
+            Navigator.pop(context); // Cierra el drawer
+          },
         ),
-      ),
+            
+            ListTile(
+              leading: Icon(Icons.favorite),
+              title: Text('Favoritos'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PaginaFavoritos()),
+                );
+              },
+            ),
+            Divider(),
+        SwitchListTile(
+          title: Text('Modo Oscuro'),
+          value: tema.esOscuro,
+          onChanged: (value) => tema.cambiaTema(value),
+          secondary: Icon(Icons.dark_mode),
+        ),
+      ],
+    ),
+  ),
+  
       appBar: AppBar(
         actions: [
           Consumer<ProviderMunicipio>(builder: (contexto, proveedor, child) {
@@ -203,7 +226,7 @@ class _PaginaInicialState extends State<PaginaInicial> {
         ],
         backgroundColor: Colors.amber,
         title: Text(
-          'Pronóstico del Tiempo por Municipios',
+          'Seany Campos Cortes; Pronóstico del Tiempo por Municipios',
           style: TextStyle(fontSize: 18),
         ),
       ),
@@ -272,25 +295,33 @@ class _PaginaInicialState extends State<PaginaInicial> {
               const Text('Pronóstico para hoy '),
               Text(
                 _hoy,
-                style: TextStyle(fontSize: 16, color: Colors.grey[700]),
+                 style: TextStyle(
+    color: Theme.of(context).brightness == Brightness.dark
+        ? Colors.white
+        : Colors.black,
+  ),
+
+                
+                
+                //(fontSize: 16, color: const Color.fromARGB(255, 187, 182, 182)),
               ),
             ],
           ),
           Consumer<ProviderPronosticos>(
-              builder: (context, proveedor_de_dias, child) {
-            if (proveedor_de_dias.estaCargando) {
+              builder: (context, proveedorDeDias, child) {
+            if (proveedorDeDias.estaCargando) {
               return Center(
                 child: CircularProgressIndicator(),
               );
             }
 
-            if (proveedor_de_dias.pronosticos.isEmpty) {
+            if (proveedorDeDias.pronosticos.isEmpty) {
               return Center(
                 child: Text("No hay pronósticos diponibles"),
               );
             }
 
-            ModeloPronostico diaPrincipal = proveedor_de_dias.pronosticos[0];
+            ModeloPronostico diaPrincipal = proveedorDeDias.pronosticos[0];
 
             return Expanded(
               child: SingleChildScrollView(
@@ -353,7 +384,7 @@ class _PaginaInicialState extends State<PaginaInicial> {
                                 ? condicionantes.maxWidth
                                 : condicionantes.maxWidth / 4,
                             child: WidgetDia(
-                              pronostico: proveedor_de_dias.pronosticos[index],
+                              pronostico: proveedorDeDias.pronosticos[index],
                               index: index,
                             ),
                           );
@@ -371,7 +402,7 @@ class _PaginaInicialState extends State<PaginaInicial> {
                             padding: EdgeInsets.symmetric(horizontal: 4.0),
                             child: ChoiceChip(
                               label: Text(
-                                proveedor_de_dias.pronosticos[index].fecha ??
+                                proveedorDeDias.pronosticos[index].fecha ??
                                     '',
                               ),
                               selected: index == _diaSeleccionado,
@@ -379,14 +410,14 @@ class _PaginaInicialState extends State<PaginaInicial> {
                               labelStyle: TextStyle(
                                 color: index == _diaSeleccionado
                                     ? Colors.white
-                                    : Colors.black,
+                                    : const Color.fromARGB(255, 206, 206, 206),
                                 fontWeight: FontWeight.bold,
                               ),
                               onSelected: (seleccionado) {
-                                if (!proveedor_de_dias.estaCargando) {
+                                if (!proveedorDeDias.estaCargando) {
                                   _alSeleccionarDia(
                                       index,
-                                      proveedor_de_dias
+                                      proveedorDeDias
                                               .pronosticos[index].fecha ??
                                           '');
                                 }

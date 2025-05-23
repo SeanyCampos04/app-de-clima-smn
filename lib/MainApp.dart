@@ -36,18 +36,16 @@ class MainApp extends StatelessWidget {
       colorScheme: ColorScheme.light(
         primary: Colors.amber,
         onPrimary: Colors.black,
-        background: Colors.white,
-        onBackground: Colors.black,
-        surface: Colors.white,
+        surface: const Color.fromARGB(255, 7, 215, 223),
         onSurface: Colors.black,
       ),
     );
     final ThemeData temaOscuro = ThemeData.dark().copyWith(
       scaffoldBackgroundColor: const Color(0xFF121212), // Fondo oscuro
-      primaryColor: Colors.amber, // Color primario ámbar
+      primaryColor: const Color.fromARGB(255, 7, 226, 255), // Color primario 
 
       appBarTheme: const AppBarTheme(
-        backgroundColor: Colors.amber, // AppBar ámbar
+        backgroundColor: Color.fromARGB(255, 7, 143, 255), // AppBar ámbar
         foregroundColor: Colors.black, // Texto e íconos en negro sobre ámbar
         elevation: 0,
       ),
@@ -64,8 +62,6 @@ class MainApp extends StatelessWidget {
       colorScheme: const ColorScheme.dark(
         primary: Colors.amber,
         onPrimary: Colors.black,
-        background: Color(0xFF121212),
-        onBackground: Colors.white,
         surface: Color(0xFF1E1E1E),
         onSurface: Colors.white,
       ),

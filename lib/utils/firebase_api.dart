@@ -1,9 +1,7 @@
 import 'dart:convert';
 
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:smn/MainApp.dart';
 
 class FirebaseApi {
   final _firebaseMessaging = FirebaseMessaging.instance;

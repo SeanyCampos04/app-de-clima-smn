@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:weather_icons/weather_icons.dart';
 
+
+import 'dart:convert';
+import 'package:flutter/services.dart';
+import 'package:smn/models/modelo_municipio.dart';
+
+
+
 class Utils {
   static Icon IconoDireccionViento(String dirvien, [double tamano = 10.0]) {
     IconData temp;
@@ -72,4 +79,13 @@ class Utils {
     }
     return valor;
   }
+}
+// Esta función puede ir fuera de la clase Utils
+Future<List<ModeloMunicipio>> cargarMunicipiosDesdeJson() async {
+  final String jsonString = await rootBundle.loadString('assets/json/municipios.json');
+  final List<dynamic> jsonResponse = json.decode(jsonString);
+
+  return jsonResponse
+      .map((item) => ModeloMunicipio.fromJson(item))
+      .toList();
 }
